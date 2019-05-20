@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  mssql:
+    image: microsoft/mssql-server-linux:latest
+    container_name: mssql-server
+    ports:
+      - 1433:1433
+    volumes:
+      - /usr/src/data/:/var/opt/mssql/data
+      # we copy our scripts onto the container
+      - ./:/usr/src/app 
+    # bash will be executed from that path, our scripts folder
+    working_dir: /usr/src/app 
+    # run the entrypoint.sh that will import the data AND sqlserver
+    command: sh -c ' chmod +x ./entrypoint.sh; ./entrypoint.sh & /opt/mssql/bin/sqlservr;'
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Kleopatra2019@

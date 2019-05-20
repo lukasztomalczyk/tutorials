@@ -1,0 +1,1 @@
+cd sql && docker-compose up -d
